@@ -7,6 +7,7 @@ namespace NET
     [TestClass]
     public class UnitTest1
     {
+
         // ========== Существующие тесты (11 шт) ==========
         [TestMethod]
         public void TestMethod1()
