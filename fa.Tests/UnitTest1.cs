@@ -98,7 +98,6 @@ namespace NET
         }
 
         // ========== Новые тесты (12 штук, всего станет 23) ==========
-
         // Дополнительные тесты для FA1
         [TestMethod]
         public void FA1_Test_NoZero()
