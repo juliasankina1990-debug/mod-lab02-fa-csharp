@@ -7,7 +7,7 @@ namespace NET
     [TestClass]
     public class UnitTest1
     {
-        // ========== Существующие тесты (11 штук) ==========
+        // ========== Существующие тесты (11 шт) ==========
         [TestMethod]
         public void TestMethod1()
         {
@@ -97,8 +97,7 @@ namespace NET
             Assert.IsTrue(result == false);
         }
 
-        // ========== Новые тесты (12 штук, всего станет 23) ==========
-        // Дополнительные тесты для FA1
+        // ========== Новые тесты (12 шт, всего 23) ==========
         [TestMethod]
         public void FA1_Test_NoZero()
         {
@@ -130,32 +129,30 @@ namespace NET
             Assert.IsFalse(fa.Run("") == true);
         }
 
-        // Дополнительные тесты для FA2
         [TestMethod]
         public void FA2_Test_OneZeroOneOne()
         {
             FA2 fa = new FA2();
-            Assert.IsTrue(fa.Run("01") == true);  // 1 ноль (нечет), 1 единица (нечет)
+            Assert.IsTrue(fa.Run("01") == true);
         }
         [TestMethod]
         public void FA2_Test_ThreeZerosTwoOnes()
         {
             FA2 fa = new FA2();
-            Assert.IsTrue(fa.Run("00011") == true); // 3 нуля (нечет), 2 единицы (чет) -> false? нет, нужно нечет/нечет
-            // 3 нечет, 2 чет -> false
+            // 3 нуля (нечёт), 2 единицы (чёт) -> false
             Assert.IsFalse(fa.Run("00011") == true);
         }
         [TestMethod]
         public void FA2_Test_ThreeZerosThreeOnes()
         {
             FA2 fa = new FA2();
-            Assert.IsTrue(fa.Run("000111") == true); // 3 нечет, 3 нечет -> true
+            Assert.IsTrue(fa.Run("000111") == true);
         }
         [TestMethod]
         public void FA2_Test_OnlyOneZero()
         {
             FA2 fa = new FA2();
-            Assert.IsFalse(fa.Run("0") == true); // 1 нечет, 0 чет -> false
+            Assert.IsFalse(fa.Run("0") == true);
         }
         [TestMethod]
         public void FA2_Test_OnlyOneOne()
@@ -164,7 +161,6 @@ namespace NET
             Assert.IsFalse(fa.Run("1") == true);
         }
 
-        // Дополнительные тесты для FA3
         [TestMethod]
         public void FA3_Test_Contains11_AtStart()
         {

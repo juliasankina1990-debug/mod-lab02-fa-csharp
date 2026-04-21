@@ -3,30 +3,26 @@ using System.Collections.Generic;
 
 namespace fans
 {
-    // Вспомогательный класс состояния (общий для всех автоматов)
     public class State
     {
-        public string Name;
-        public Dictionary<char, State> Transitions;
-        public bool IsAcceptState;
+        public string Name { get; set; }
+        public Dictionary<char, State> Transitions { get; set; }
+        public bool IsAcceptState { get; set; }
     }
 
     // FA1: ровно один '0' и хотя бы одна '1'
     public class FA1
     {
-        private State A, B, C, D, E;
-        private State InitialState;
+        private readonly State _initial;
 
         public FA1()
         {
-            // Создаём состояния
-            A = new State { Name = "A", IsAcceptState = false, Transitions = new Dictionary<char, State>() };
-            B = new State { Name = "B", IsAcceptState = false, Transitions = new Dictionary<char, State>() };
-            C = new State { Name = "C", IsAcceptState = false, Transitions = new Dictionary<char, State>() };
-            D = new State { Name = "D", IsAcceptState = true,  Transitions = new Dictionary<char, State>() };
-            E = new State { Name = "E", IsAcceptState = false, Transitions = new Dictionary<char, State>() };
+            var A = new State { Name = "A", IsAcceptState = false, Transitions = new Dictionary<char, State>() };
+            var B = new State { Name = "B", IsAcceptState = false, Transitions = new Dictionary<char, State>() };
+            var C = new State { Name = "C", IsAcceptState = false, Transitions = new Dictionary<char, State>() };
+            var D = new State { Name = "D", IsAcceptState = true,  Transitions = new Dictionary<char, State>() };
+            var E = new State { Name = "E", IsAcceptState = false, Transitions = new Dictionary<char, State>() };
 
-            // Определяем переходы
             A.Transitions['0'] = C;
             A.Transitions['1'] = B;
 
@@ -42,13 +38,13 @@ namespace fans
             E.Transitions['0'] = E;
             E.Transitions['1'] = E;
 
-            InitialState = A;
+            _initial = A;
         }
 
         public bool? Run(IEnumerable<char> s)
         {
-            State current = InitialState;
-            foreach (char c in s)
+            var current = _initial;
+            foreach (var c in s)
             {
                 if (!current.Transitions.ContainsKey(c))
                     return null;
@@ -58,15 +54,15 @@ namespace fans
         }
     }
 
-    // FA2: нечётное количество '0' и нечётное количество '1'
+    // FA2: нечётное количество '0' И нечётное количество '1'
     public class FA2
     {
-        private State[,] states; // [чётность0, чётность1]
-        private State InitialState;
+        private readonly State _initial;
 
         public FA2()
         {
-            states = new State[2, 2];
+            // состояния [чётность0, чётность1]
+            var states = new State[2, 2];
             for (int i = 0; i < 2; i++)
                 for (int j = 0; j < 2; j++)
                 {
@@ -78,7 +74,7 @@ namespace fans
                     };
                 }
 
-            // Переходы: по '0' меняем чётность0, по '1' меняем чётность1
+            // заполнение переходов
             for (int i = 0; i < 2; i++)
                 for (int j = 0; j < 2; j++)
                 {
@@ -86,13 +82,13 @@ namespace fans
                     states[i, j].Transitions['1'] = states[i, 1 - j];
                 }
 
-            InitialState = states[0, 0];
+            _initial = states[0, 0];
         }
 
         public bool? Run(IEnumerable<char> s)
         {
-            State current = InitialState;
-            foreach (char c in s)
+            var current = _initial;
+            foreach (var c in s)
             {
                 if (!current.Transitions.ContainsKey(c))
                     return null;
@@ -105,14 +101,13 @@ namespace fans
     // FA3: содержит подстроку "11"
     public class FA3
     {
-        private State S0, S1, S2;
-        private State InitialState;
+        private readonly State _initial;
 
         public FA3()
         {
-            S0 = new State { Name = "S0", IsAcceptState = false, Transitions = new Dictionary<char, State>() };
-            S1 = new State { Name = "S1", IsAcceptState = false, Transitions = new Dictionary<char, State>() };
-            S2 = new State { Name = "S2", IsAcceptState = true,  Transitions = new Dictionary<char, State>() };
+            var S0 = new State { Name = "S0", IsAcceptState = false, Transitions = new Dictionary<char, State>() };
+            var S1 = new State { Name = "S1", IsAcceptState = false, Transitions = new Dictionary<char, State>() };
+            var S2 = new State { Name = "S2", IsAcceptState = true,  Transitions = new Dictionary<char, State>() };
 
             S0.Transitions['0'] = S0;
             S0.Transitions['1'] = S1;
@@ -123,13 +118,13 @@ namespace fans
             S2.Transitions['0'] = S2;
             S2.Transitions['1'] = S2;
 
-            InitialState = S0;
+            _initial = S0;
         }
 
         public bool? Run(IEnumerable<char> s)
         {
-            State current = InitialState;
-            foreach (char c in s)
+            var current = _initial;
+            foreach (var c in s)
             {
                 if (!current.Transitions.ContainsKey(c))
                     return null;
